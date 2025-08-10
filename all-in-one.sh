@@ -158,6 +158,31 @@ git clone https://github.com/LazyVim/starter ~/.config/nvim
 
 echo "NeoVim Installtion Complated"
 
+#!/bin/bash
+
+PLUGIN_DIR="$HOME/.config/nvim/lua/plugins"
+SEARCH_FILE="$PLUGIN_DIR/search.lua"
+
+# Create the plugins directory if it doesn't exist
+mkdir -p "$PLUGIN_DIR"
+
+# Write the Lua plugin config
+cat > "$SEARCH_FILE" <<'EOF'
+return {
+  { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+  { "ibhagwan/fzf-lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+}
+EOF
+
+echo "✅ Created $SEARCH_FILE with Telescope + fzf-lua config."
+
+# Run Lazy sync in headless mode
+echo "📦 Installing plugins..."
+nvim --headless "+Lazy! sync" +qa
+
+echo "✅ Plugins installed. You can now use :Telescope colorscheme or :FzfLua colorschemes."
+
+
 
 ##### 8. Final Output #####
 echo "Neovim and all CLI tools installed successfully!"
