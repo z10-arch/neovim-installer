@@ -15,11 +15,11 @@ done
 echo "All required tools are installed."
 
 # Variables
-FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip"
-FONT_ZIP="FiraCode.zip"
-FONT_DIR="$HOME/.local/share/fonts/FiraCode"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip"
+FONT_ZIP="CascadiaCode.zip"
+FONT_DIR="$HOME/.local/share/fonts/CascadiaCode"
 
-echo "Downloading FiraCode Nerd Font..."
+echo "Downloading CascadiaCode Nerd Font..."
 curl -LO "$FONT_URL"
 
 echo "Creating font directory at $FONT_DIR ..."
