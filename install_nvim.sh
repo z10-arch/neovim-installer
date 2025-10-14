@@ -8,6 +8,8 @@ if ! sudo -v >/dev/null 2>&1; then
     exit 1
 fi
 
+apt install fzf fontconfig -y
+
 # Required tools
 REQUIRED_TOOLS=(curl wget tar git realpath)
 
