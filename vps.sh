@@ -16,7 +16,7 @@ echo "📦 Installing essential packages..."
 sudo apt update -y
 sudo apt install -y \
   fzf build-essential fontconfig curl wget tar git coreutils \
-  fd-find ripgrep python3-pip
+  fd-find ripgrep python3-pip python3-pipx
 
 # -----------------------------
 # 2. Python tools
