@@ -22,8 +22,7 @@ sudo apt install -y \
 # 2. Python tools
 # -----------------------------
 echo "🐍 Installing Python packages..."
-pip install -U pip
-pip install ast-grep-cli
+pip install ast-grep-cli || { echo "Retrying with --break-system-packages"; pip install ast-grep-cli --break-system-packages; }
 
 # -----------------------------
 # 3. Install LazyGit (latest release)
