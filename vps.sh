@@ -16,7 +16,13 @@ echo "📦 Installing essential packages..."
 sudo apt update -y
 sudo apt install -y \
   fzf build-essential fontconfig curl wget tar git coreutils \
-  fd-find ripgrep python3-pip
+  fd-find ripgrep python3-pip ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick
+
+echo "Installing Yazi Packages"
+wget -qO yazi.zip https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.zip
+unzip -q yazi.zip -d yazi-temp
+sudo mv yazi-temp/*/{ya,yazi} /usr/local/bin
+rm -rf yazi-temp yazi.zip
 
 # -----------------------------
 # 2. Python tools
