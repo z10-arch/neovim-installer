@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+echo "Installing Nushell (POSIX script)..."
+
+# Ensure required tools
+sudo apt update
+sudo apt install -y wget gpg ca-certificates
+
+# Create keyrings directory if missing
+sudo mkdir -p /etc/apt/keyrings
+
+# Download and install GPG key
+wget -qO- https://apt.fury.io/nushell/gpg.key \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/fury-nushell.gpg
+
+# Add Nushell APT repository
+echo "deb [signed-by=/etc/apt/keyrings/fury-nushell.gpg] https://apt.fury.io/nushell/ /" \
+  | sudo tee /etc/apt/sources.list.d/fury-nushell.list >/dev/null
+
+# Update package lists and install Nushell
+sudo apt update
+sudo apt install -y nushell
+
+echo "Nushell installation completed successfully."
