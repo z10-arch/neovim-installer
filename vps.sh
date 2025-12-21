@@ -57,10 +57,58 @@ if ! have uv; then
 fi
 
 # -------------------------------------------------
-# 3. Go
+# 3. Go (latest official, skip if installed)
 # -------------------------------------------------
-if ! have go; then
-  sudo apt install -y golang-go
+if have go; then
+  echo "Go already installed: $(go version)"
+else
+  echo "Installing latest Go..."
+
+  GO_ARCH=""
+  case "$ARCH" in
+    x86_64) GO_ARCH="amd64" ;;
+    aarch64|arm64) GO_ARCH="arm64" ;;
+    *)
+      echo "Unsupported architecture for Go: $ARCH"
+      exit 1
+      ;;
+  esac
+
+  GO_VERSION="$(curl -fsSL https://go.dev/VERSION?m=text | sed -n '1p')"
+
+  if [ -z "$GO_VERSION" ]; then
+    echo "Failed to detect latest Go version"
+    exit 1
+  fi
+
+  GO_TARBALL="${GO_VERSION}.linux-${GO_ARCH}.tar.gz"
+  GO_URL="https://go.dev/dl/${GO_TARBALL}"
+
+  echo "Downloading ${GO_VERSION} (${GO_ARCH})"
+
+  cd /tmp
+  curl -fLO "$GO_URL"
+
+  sudo rm -rf /usr/local/go
+  sudo tar -C /usr/local -xzf "$GO_TARBALL"
+
+  rm -f "$GO_TARBALL"
+
+  # Environment setup (system-wide)
+  sudo tee /etc/profile.d/go.sh >/dev/null <<'EOF'
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+EOF
+
+  sudo chmod 644 /etc/profile.d/go.sh
+
+  # Load immediately for current shell
+  export GOROOT=/usr/local/go
+  export GOPATH="$HOME/go"
+  export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+
+  echo "Go installed successfully: $(go version)"
 fi
 
 # -------------------------------------------------
