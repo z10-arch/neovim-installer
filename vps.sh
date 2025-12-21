@@ -19,7 +19,7 @@ sudo apt install -y \
   build-essential gcc g++ make \
   software-properties-common \
   fontconfig file jq fzf p7zip-full \
-  poppler-utils fd-find ffmpeg zsh
+  poppler-utils fd-find ffmpeg zsh sqlite3
 
 # fd command fix
 if ! have fd; then
