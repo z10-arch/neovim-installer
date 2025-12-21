@@ -19,7 +19,23 @@ sudo apt install -y \
   build-essential gcc g++ make \
   software-properties-common \
   fontconfig file jq fzf p7zip-full \
-  poppler-utils fd-find ffmpeg zsh sqlite3 eza aria2 tmux
+  poppler-utils fd-find ffmpeg zsh sqlite3 eza aria2 tmux fc-cache unzip
+
+# NERD Font installation
+if fc-list | grep -qiE 'Cascadia Code|CaskaydiaCove'; then
+    echo "Cascadia Code Nerd Font already installed. Skipping."
+else
+    echo "Cascadia Code Nerd Font not found. Installing..."
+
+    FONT_DIR="$HOME/.local/share/fonts"
+    mkdir -p "$FONT_DIR" || exit 1
+    cd "$FONT_DIR" || exit 1
+
+    curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip &&
+    unzip -o CascadiaCode.zip &&
+    fc-cache -fv
+fi
+
 
 # fd command fix
 if ! have fd; then
